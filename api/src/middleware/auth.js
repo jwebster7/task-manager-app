@@ -7,9 +7,7 @@ const auth = async (req, res, next) => {
         const token = req.cookies.token;
 
         if (!token) {
-            return res
-                .status(401)
-                .json("Please login or register for an account!");
+            throw new Error();
         }
 
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);

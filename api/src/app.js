@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-app.use(taskRouter);
-app.use(userRouter);
+app.use('/api/', taskRouter);
+app.use('/api/', userRouter);
 
 module.exports = app;
