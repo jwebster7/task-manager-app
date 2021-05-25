@@ -5,8 +5,7 @@ export const registerUser = async (e, name, email, password) => {
     e.preventDefault();
 
     const headers = {
-        "content-type": "application/json",
-        connection: "keep-alive"
+        "content-type": "application/json"
     };
 
     const data = {
@@ -127,7 +126,6 @@ export const updateUserProfile = async (e) => {
 
     const headers = {
         "content-type": "application/json",
-        connection: "keep-alive",
         withCredentials: true
     };
 
@@ -152,7 +150,6 @@ export const deleteUserAccount = async (e) => {
 
     const headers = {
         "content-type": "application/json",
-        connection: "keep-alive",
         withCredentials: true
     };
 

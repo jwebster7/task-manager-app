@@ -3,7 +3,14 @@ import { Switch, Route } from "react-router-dom";
 import Login from "./components/login/login.component";
 import Register from "./components/register/register.component";
 
-import { createNewTask } from "./api/task";
+import {
+    createTask,
+    deleteTask,
+    getTask,
+    getTasks,
+    updateTask
+} from "./api/task";
+
 import {
     deleteUserAccount,
     getUserProfile,
@@ -19,7 +26,11 @@ function App() {
         <Switch>
             <Route exact path='/'>
                 <button onClick={(e) => registerUser(e)}>Register</button>
-                <button onClick={(e) => createNewTask(e)}>Create Task</button>
+                <button onClick={(e) => createTask(e)}>Create Task</button>
+                <button onClick={(e) => getTasks(e)}>Get Tasks</button>
+                <button onClick={(e) => getTask(e)}>Get Task</button>
+                <button onClick={(e) => deleteTask(e)}>Delete Task</button>
+                <button onClick={(e) => updateTask(e)}>Update Task</button>
                 <button onClick={(e) => loginUser(e)}>Login</button>
                 <button onClick={(e) => logoutUser(e)}>Logout</button>
                 <button onClick={(e) => globallyLogoutUser(e)}>
