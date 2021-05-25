@@ -20,12 +20,15 @@ const upload = multer({
 
 const router = express.Router();
 
-router.post("/users", async (req, res) => {
+router.post("/users/register", async (req, res) => {
     try {
         const user = new User(req.body);
         const token = await user.generateAuthToken();
         await user.save();
-        res.status(201).send({ user, token });
+        // attach a cookie to the response called "token"
+        res.cookie("token", token, { httpOnly: true });
+        res.status(201).send({ user });
+        // res.status(201).send({ user, token });
     } catch (err) {
         res.status(400).send(err);
     }
@@ -39,7 +42,9 @@ router.post("/users/login", async (req, res) => {
             req.body.password
         );
         const token = await user.generateAuthToken();
-        res.send({ user, token });
+        res.cookie("token", token, { httpOnly: true });
+        res.send({ user });
+        // res.send({ user, token });
     } catch (err) {
         res.status(400).send(err);
     }
@@ -48,9 +53,11 @@ router.post("/users/login", async (req, res) => {
 router.post("/users/logout", auth, async (req, res) => {
     try {
         // only remove the user token supplied from the logout call
+        // req.token is verified and decoded in the auth middleware
         req.user.tokens = req.user.tokens.filter(
             (token) => token.token !== req.token
         );
+
         await req.user.save();
         res.send();
     } catch (err) {

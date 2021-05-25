@@ -1,10 +1,16 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
+// inspired by - https://dev.to/mr_cea/remaining-stateless-jwt-cookies-in-node-js-3lle
 const auth = async (req, res, next) => {
     try {
-        const token = req.header("Authorization").replace("Bearer ", "");
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const token = req.cookies.token;
+
+        if (!token) {
+            throw new Error();
+        }
+
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findOne({
             _id: decoded._id,
             "tokens.token": token
@@ -16,10 +22,10 @@ const auth = async (req, res, next) => {
 
         req.token = token;
         req.user = user;
-        // run the route handler because all is well.
+
         next();
     } catch (e) {
-        res.status(401).send({ error: "Please authenticate" });
+        res.status(401).send({ error: "Please login" });
     }
 };
 
