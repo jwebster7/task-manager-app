@@ -41,6 +41,7 @@ router.post("/users/login", async (req, res) => {
             req.body.email,
             req.body.password
         );
+
         const token = await user.generateAuthToken();
         res.cookie("token", token, { httpOnly: true });
         res.send({ user });
@@ -99,9 +100,24 @@ router.get("/users/me", auth, async (req, res) => {
     res.send(req.user);
 });
 
-router.get("/users/:id/avatar", async (req, res) => {
+// router.get("/users/:id/avatar", async (req, res) => {
+//     try {
+//         const user = await User.findById(req.params.id);
+//         if (!user || !user.avatar) {
+//             throw new Error();
+//         }
+
+//         // using sharp to convert all uploads to png allows this to always be true
+//         res.set("Content-Type", "image/png");
+//         res.send(user.avatar);
+//     } catch (err) {
+//         res.status(404).send();
+//     }
+// });
+
+router.get("/users/:id/avatar", auth, async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.user._id);
         if (!user || !user.avatar) {
             throw new Error();
         }
