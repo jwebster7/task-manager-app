@@ -15,9 +15,7 @@ import {
     deleteUserAccount,
     getUserProfile,
     globallyLogoutUser,
-    loginUser,
     logoutUser,
-    registerUser,
     updateUserProfile
 } from "./api/user";
 
@@ -25,13 +23,13 @@ function App() {
     return (
         <Switch>
             <Route exact path='/'>
-                <button onClick={(e) => registerUser(e)}>Register</button>
+                <Login />
+                <Register />
                 <button onClick={(e) => createTask(e)}>Create Task</button>
                 <button onClick={(e) => getTasks(e)}>Get Tasks</button>
                 <button onClick={(e) => getTask(e)}>Get Task</button>
                 <button onClick={(e) => deleteTask(e)}>Delete Task</button>
                 <button onClick={(e) => updateTask(e)}>Update Task</button>
-                <button onClick={(e) => loginUser(e)}>Login</button>
                 <button onClick={(e) => logoutUser(e)}>Logout</button>
                 <button onClick={(e) => globallyLogoutUser(e)}>
                     Globally Logout

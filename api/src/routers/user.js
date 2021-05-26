@@ -41,6 +41,7 @@ router.post("/users/login", async (req, res) => {
             req.body.email,
             req.body.password
         );
+
         const token = await user.generateAuthToken();
         res.cookie("token", token, { httpOnly: true });
         res.send({ user });

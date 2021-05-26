@@ -1,54 +1,43 @@
 import axios from "axios";
 
-export const registerUser = async (e, name, email, password) => {
-    // adding this for now, but will be unnecessary once the rest of the app is together
-    e.preventDefault();
-
+export const registerUser = async (name, email, password) => {
     const headers = {
         "content-type": "application/json"
     };
 
-    const data = {
-        name: "jwebster7",
-        email: "jwebster7@app.com",
-        password: "nextPassword"
+    const body = {
+        name,
+        email,
+        password
     };
 
     try {
-        const response = await axios.post("/api/users/register", data, headers);
-        console.log(response);
-        return response;
-    } catch (e) {
-        // do something different here like an alert or something.
-        console.error(e);
+        const response = await axios.post("/api/users/register", body, headers);
+        return { status: response.status, data: response.data };
+    } catch (error) {
+        return { status: error.response.status, data: "Unable to register!" };
     }
 };
 
-export const loginUser = async (e, email, password) => {
-    e.preventDefault();
-
+export const loginUser = async (email, password) => {
     const headers = {
         "content-type": "application/json"
     };
 
-    const data = {
-        email: "jwebster7@app.com",
-        password: "nextPassword"
+    const body = {
+        email,
+        password
     };
 
     try {
-        const response = await axios.post("/api/users/login", data, headers);
-        console.log(response);
-        return response;
-    } catch (e) {
-        // do something different here like an alert or something.
-        console.error(e);
+        const response = await axios.post("/api/users/login", body, headers);
+        return { status: response.status, data: response.data };
+    } catch (error) {
+        return { status: error.response.status, data: "Unable to login!" };
     }
 };
 
-export const logoutUser = async (e, email, password) => {
-    e.preventDefault();
-
+export const logoutUser = async () => {
     const headers = {
         "content-type": "application/json",
         withCredentials: true
@@ -56,16 +45,14 @@ export const logoutUser = async (e, email, password) => {
 
     try {
         const response = await axios.post("/api/users/logout", headers);
-        console.log(response);
-        return response;
-    } catch (e) {
-        // do something different here like an alert or something.
-        console.error(e);
+        return { status: response.status, data: response.data };
+    } catch (error) {
+        return { status: error.response.status, data: "Unable to logout!" };
     }
 };
 
-export const globallyLogoutUser = async (e) => {
-    e.preventDefault();
+export const globallyLogoutUser = async () => {
+    // e.preventDefault();
 
     const headers = {
         "content-type": "application/json",
@@ -75,10 +62,9 @@ export const globallyLogoutUser = async (e) => {
     try {
         const response = await axios.post("/api/users/logoutAll", headers);
         console.log(response);
-        return response;
-    } catch (e) {
-        // do something different here like an alert or something.
-        console.error(e);
+        return { status: response.status, data: response.data };
+    } catch (error) {
+        return { status: error.response.status, data: "Unable to logout!" };
     }
 };
 
